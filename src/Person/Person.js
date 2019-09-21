@@ -1,17 +1,14 @@
 import React from "react";
-import "./Person.css";
-import Radium from "radium";
+import classes from "./Person.module.css";
 
 const person = (props) => {
 
-    const style = {
-        '@media (min-width: 500px)': {
-            width: '450px'
-        }
-    }
+    const random = Math.random();
+
+    if (random > 0.5) throw new Error('Cant render Person');
 
     return (
-        <div className="Person" style={style}>
+        <div className={classes.cart}>
             <span onClick={props.onDeletePerson}>Delete</span>
             <h1>I'm {props.name}. I'm {props.age} old</h1>
             <input 
@@ -21,4 +18,4 @@ const person = (props) => {
     )
 }
 
-export default Radium(person)
+export default person

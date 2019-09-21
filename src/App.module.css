@@ -14,3 +14,14 @@
   margin-top: 16px;
   margin-bottom: 16px;
 }
+.App button {
+  background-color: green;
+  color: white;
+  border: 1px solid black;
+  padding: 10px;
+}
+
+.App button:hover {
+  cursor: pointer;
+  background-color: lightseagreen;
+}
