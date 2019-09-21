@@ -1,0 +1,27 @@
+.Cockpit {
+  .bold {
+    font-weight: bold;
+  }
+  .big-size {
+    font-size: 50px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .margin-top-bottom {
+    margin-top: 16px;
+    margin-bottom: 16px;
+  }
+
+  button {
+    background-color: green;
+    color: white;
+    border: 1px solid black;
+    padding: 10px;
+    &:hover {
+      cursor: pointer;
+      background-color: lightseagreen;
+    }
+  }
+}
