@@ -1,18 +1,22 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import classes from './App.module.scss';
 import Persons from "./../components/Persons/Persons";
 import Cockpit from "./../components/Cockpit/Cockpit";
 
-class App extends Component {
+class App extends PureComponent {
 
-  state = {
-    persons: [
-      { code: 'p01', name: 'nhi', age: 20 },
-      { code: 'p02', name: 'Linh', age: 22 },
-      { code: 'p03', name: 'Nga', age: 24 }
-    ],
-    otherState: 'anything',
-    isShowPerson: false
+  constructor(props) {
+    super(props);
+    this.state = {
+      persons: [
+        { code: 'p01', name: 'nhi', age: 20 },
+        { code: 'p02', name: 'Linh', age: 22 },
+        { code: 'p03', name: 'Nga', age: 24 }
+      ],
+      otherState: 'anything',
+      isShowPerson: false,
+      isShowCockpit: true
+    }
   }
 
   togglePersonHandler = () => {
@@ -49,12 +53,24 @@ class App extends Component {
     /> : null
   }
 
+  removeCockpit = () => {
+    this.setState({
+      isShowCockpit: !this.state.isShowCockpit
+    })
+  }
+
+  renderCockpit = () => {
+    return this.state.isShowCockpit ? <Cockpit 
+    title={this.props.appTitle}
+    onToggle={this.togglePersonHandler}
+    personsLength={this.state.persons.length}/> : null
+  }
+
   render() {
     return (
       <div className={classes.App}>
-        <Cockpit 
-          onToggle={this.togglePersonHandler}
-          personLength={this.state.persons.length}/>
+        <button onClick={this.removeCockpit}>toggle cockpit</button>
+        { this.renderCockpit() }
         { this.renderPerson() }
       </div>
     );
