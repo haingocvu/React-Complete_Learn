@@ -2,6 +2,8 @@ import React, { PureComponent } from 'react';
 import classes from './App.module.scss';
 import Persons from "./../components/Persons/Persons";
 import Cockpit from "./../components/Cockpit/Cockpit";
+import { withClass } from "../components/hoc/withClass";
+import Aux from "../components/hoc/Aux";
 
 class App extends PureComponent {
 
@@ -68,13 +70,13 @@ class App extends PureComponent {
 
   render() {
     return (
-      <div className={classes.App}>
+      <Aux>
         <button onClick={this.removeCockpit}>toggle cockpit</button>
         { this.renderCockpit() }
         { this.renderPerson() }
-      </div>
+      </Aux>
     );
   }
 }
 
-export default App;
+export default withClass(App, classes.App);
