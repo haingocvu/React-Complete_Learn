@@ -4,6 +4,7 @@ import Persons from "./../components/Persons/Persons";
 import Cockpit from "./../components/Cockpit/Cockpit";
 import { withClass } from "../components/hoc/withClass";
 import Aux from "../components/hoc/Aux";
+import AuthContext from "../context/auth-context";
 
 class App extends PureComponent {
 
@@ -17,7 +18,8 @@ class App extends PureComponent {
       ],
       otherState: 'anything',
       isShowPerson: false,
-      isShowCockpit: true
+      isShowCockpit: true,
+      authenticated: false
     }
   }
 
@@ -62,18 +64,29 @@ class App extends PureComponent {
   }
 
   renderCockpit = () => {
-    return this.state.isShowCockpit ? <Cockpit 
-    title={this.props.appTitle}
-    onToggle={this.togglePersonHandler}
-    personsLength={this.state.persons.length}/> : null
+    return this.state.isShowCockpit ? <Cockpit
+      title={this.props.appTitle}
+      onToggle={this.togglePersonHandler}
+      personsLength={this.state.persons.length} /> : null
+  }
+
+  login = () => {
+    this.setState({
+      authenticated: true
+    })
   }
 
   render() {
     return (
       <Aux>
         <button onClick={this.removeCockpit}>toggle cockpit</button>
-        { this.renderCockpit() }
-        { this.renderPerson() }
+        <AuthContext.Provider value={{
+          authenticated: this.state.authenticated,
+          login: this.login
+        }}>
+          {this.renderCockpit()}
+          {this.renderPerson()}
+        </AuthContext.Provider>
       </Aux>
     );
   }

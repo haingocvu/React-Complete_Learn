@@ -1,31 +1,19 @@
-import React, { useEffect, useRef, memo } from 'react';
+import React, { useEffect, useRef, memo, useContext } from 'react';
 import classes from "./Cockpit.module.scss";
+import AuthContext from '../../context/auth-context';
 
 const Cockpit = (props) => {
 
     console.log('[Cockpit] render')
 
-    // with below config
-    // this hook will only execute when persons get update
-    // and not execute when initialize
-    // we clean up promise by using isSubscribed variable
-    const isFirstInit = useRef(true);
+    const btnToggleRef = useRef(null);
+
+    const authContext = useContext(AuthContext);
+
+    // componentDidMount
     useEffect(() => {
-        let isSubscribed = true;
-        if (isFirstInit.current) {
-            isFirstInit.current = false
-        } else {
-            setTimeout(() => {
-                if (isSubscribed) {
-                    console.log('Cockpit saved data to cloud')
-                }
-            }, 500);
-        }
-        return () => {
-            console.log('on destroy cockpit')
-            isSubscribed = false;
-        };
-    }, [props.persons])
+        btnToggleRef.current.click();
+    }, [])
 
     const buildClass = () => {
         const clss = [classes['margin-top-bottom']];
@@ -37,7 +25,9 @@ const Cockpit = (props) => {
     return (
         <div className={classes.Cockpit}>
             <div className={buildClass()}>{props.title}</div>
+            <button onClick={authContext.login}>Login</button>
             <button
+                ref={btnToggleRef}
                 onClick={props.onToggle}>
                 Toggle Person
             </button>
